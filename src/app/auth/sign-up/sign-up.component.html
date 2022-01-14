@@ -1,0 +1,30 @@
+<div class="background">
+  <div class="shape"></div>
+  <div class="shape"></div>
+</div>
+<form (ngSubmit)="onSubmit()">
+  <div [formGroup]="registerForm">
+
+    <h3>Sign up</h3>
+
+    <label for="firstname">First Name: </label>
+    <input required="true" id="firstname" type="text" formControlName="firstname" placeholder="First Name">
+
+    <label for="lastname">Last Name: </label>
+    <input required="true" id="lastname" type="text" formControlName="lastname" placeholder="Last Name">
+
+    <label for="email">E-mail: </label>
+    <input required="true" id="email" type="email" formControlName="email" placeholder="E-mail">
+
+    <label for="password">Password: </label>
+    <input required="true" id="password" type="password" formControlName="password" placeholder="Password">
+
+    <button type="submit"   [disabled]="!registerForm.valid">Register</button>
+    <a routerLink="/signIn">Sign in</a>
+
+  </div>
+
+</form>
+
+
+

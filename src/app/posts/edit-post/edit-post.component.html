@@ -1,0 +1,19 @@
+<form (ngSubmit)="updatePost()">
+
+<div  style="padding: 5px" >
+  <div  [formGroup]="postForm" class="card">
+    <header class="user">
+      <div class="userFirstLetter">{{user.firstname[0].toUpperCase()}}</div>
+      <div class="userName">
+        <h2>{{user.firstname}}</h2>
+        <input formControlName="title" [value]="post.tile" placeholder="Title">
+      </div>
+    </header>
+    <main>
+      <textarea formControlName='body' [value]="post.body" placeholder="Body"></textarea>
+    </main>
+    <button type="submit" [disabled]="!this.postForm.valid">Edit</button>
+    <button type="button" routerLink="/posts">Posts</button>
+  </div>
+</div>
+</form>

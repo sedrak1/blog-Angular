@@ -1,0 +1,48 @@
+form{
+  font-family: 'Poppins', sans-serif;
+}
+
+.postCard{
+  display: block;
+}
+
+.titleDiv{
+  display: flex;
+  padding-bottom: 5px;
+}
+
+.title{
+  display: block;
+}
+
+.titleInput{
+  display: block;
+  border: 2px #5635b2 solid;
+  border-radius: 8px;
+}
+
+.body{
+  display: block;
+  width: 60%;
+  height: 300px;
+  border: 2px #5635b2 solid;
+  border-radius: 8px;
+  padding-bottom: 5px;
+  background-color: rgba(128, 128, 128, 0.6);
+  box-shadow: 0 4px 8px 0 rgba(63, 47, 94, 0.85);
+}
+
+.btn{
+
+}
+.userPic{
+  border-radius: 50%;
+  background-color: #5635b2;
+  width: 30px;
+  height: 30px;
+  color: white;
+  text-align: center;
+  font-size: 30px;
+  padding: 14px;
+}
+

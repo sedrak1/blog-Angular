@@ -1,0 +1,21 @@
+
+<button routerLink="/posts">View posts</button>
+<form (ngSubmit)="post()" >
+  <div class="postCard" [formGroup]="postForm">
+
+  <h3>Create post</h3>
+
+    <div class="titleDiv">
+      <label class="title" for="title">Title:</label>
+      <input class="titleInput" required="true" id="title" type="title" formControlName="title" >
+    </div>
+    <div style="display: flex">
+        <div class="userPic"> {{user.firstname[0].toUpperCase()}} </div>
+        <textarea class="body" required="true" id="body" type="text" formControlName="body" ></textarea>
+    </div>
+
+    <button class="btn" type="submit" [disabled]="!postForm.valid">Post</button>
+
+  </div>
+</form>
+
