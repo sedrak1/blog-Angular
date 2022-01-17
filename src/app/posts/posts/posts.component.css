@@ -79,8 +79,8 @@ p {
 
 p.comment {
   margin-left: auto;
+  cursor: pointer;
 }
-
 
 .userFirstLetter{
   border-radius: 50%;

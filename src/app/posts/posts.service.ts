@@ -1,27 +1,28 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
-import {User} from "../../user";
-import {HttpClient} from "@angular/common/http";
-import { Post } from "../../post";
-import {Router} from "@angular/router";
+import { Observable } from 'rxjs';
+import { User } from '../../user';
+import { HttpClient } from '@angular/common/http';
+import { Post } from '../../post';
+import { Router } from '@angular/router';
+import { Comment } from '../../comment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PostsService {
-  private url = "https://blog.fifth-llc.com/"
-  constructor(private http: HttpClient, private router: Router) { }
+  private url = 'https://blog.fifth-llc.com/';
+  constructor(private http: HttpClient, private router: Router) {}
 
   createPost(post: Post): Observable<Post> {
-    return this.http.post<Post>(this.url + 'api/v1/post', post, );
+    return this.http.post<Post>(this.url + 'api/v1/post', post);
   }
 
   getPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(this.url + 'api/v1/post');
   }
 
-  getPost(id:number): Observable<Post>{
-    return this.http.get<Post>(this.url+'api/v1/post/' + id)
+  getPost(id: number): Observable<Post> {
+    return this.http.get<Post>(this.url + 'api/v1/post/' + id);
   }
 
   editPost(post: Post): Observable<any> {
@@ -36,5 +37,23 @@ export class PostsService {
     return this.http.get<User>(this.url + 'api/v1/me');
   }
 
+  addComment(postId: number, comment: Comment): Observable<Comment> {
+    return this.http.post<Comment>(this.url + `api/v1/post/${postId}/comment`, comment);
+  }
 
+  getComments(postId: number): Observable<Comment[]> {
+    return this.http.get<Comment[]>(this.url + `api/v1/post/${postId}/comment`);
+  }
+
+  getComment(postId: number, id: number): Observable<Comment> {
+    return this.http.get<Comment>(this.url + `api/v1/post/${postId}/comment/` + id);
+  }
+
+  editComment(postId: number, comment: Comment): Observable<any> {
+    return this.http.put(this.url + `api/v1/post/${postId}/comment/${comment.id}`, comment);
+  }
+
+  deleteComment(postId: number, id: number): Observable<Comment> {
+    return this.http.delete<Comment>(this.url + `api/v1/post/${postId}/comment/${id}`);
+  }
 }

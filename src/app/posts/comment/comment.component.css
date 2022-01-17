@@ -1,0 +1,60 @@
+.commentInput{
+    width: 100%;
+    padding-left: 5px;
+    border: none;
+    height: 30px;
+    margin-right: 5px;
+    background-color: rgba(0, 0, 0, 0);
+    border-bottom: 1px solid white;
+    caret-color: rgb(136, 133, 133);
+    color: white;
+}
+.commentInput:focus{
+    outline: none;
+}
+
+.parent{
+    display: flex;
+}
+
+.button{
+    border-radius: 8px;
+    border: none;
+    padding: 5px;
+}
+.button:hover{
+    cursor: pointer;
+}
+
+section {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+.commentToggle {
+    color: rgba(255, 255, 255, 0.508);
+    font-size: 12px;
+    margin-left: 10px;
+    margin-left: auto;
+    cursor: pointer;
+  }
+  
+.comment {
+    width: 100%;
+    padding-left: 5px;
+    border: none;
+    height: 30px;
+    margin-right: 5px;
+    background-color: rgba(0, 0, 0, 0);
+    border-bottom: 1px solid white;
+    color: white;
+}
+
+.commentDiv{
+    display: flex;
+    width: 100%;
+    padding: 3px;
+}
+
+  

@@ -18,7 +18,16 @@
       <p>{{item.body}}</p>
     </main>
     <section>
-      <p class="comment">Comments</p>
+      <p (click)='getComments(item.id)' class="comment">Comments</p>
     </section>
+    <div class="parent">
+      <input class="commentInput" type="text" placeholder="Write your comment..." [(ngModel)]='commentValue'>
+      <button class="button" (click)="addComment(item.id)">Send</button>
+    </div>
+    <!-- <li>{{getComments(item.id)}}</li> -->
+    <div *ngFor='let comment of commentsArr'>
+      <app-comment [comment]='comment' [post]="item"></app-comment>
+    </div>
+
   </div>
 </div>

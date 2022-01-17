@@ -1,1 +1,12 @@
-<p>comment works!</p>
+
+
+<!-- <section>
+    <p (click)='onToggle()' class="commentToggle">Comments</p>
+</section>
+<div *ngIf='toggle'>     -->
+        <div class="commentDiv" >
+            <input class="commentInput" [value]='comment.body'   [readonly]='readonly'>
+            <button *ngIf='readonly' class='button' (click)='getComment(comment.id)'>edit</button>
+            <button *ngIf='!readonly' class='button' (click)='editComment(comment.id)'>save</button>
+        </div>
+<!-- </div> -->
