@@ -2,32 +2,6 @@
   <li><a href="/create-post">Create</a></li>
   <li><a href="" (click)="logOut()">Log out</a></li>
 </ul>
-
-<div class="parent" style="padding: 5px" *ngFor="let item of postsArr">
-  <div  class="card">
-    <img class="edit" routerLink="{{item.id}}" src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/40/000000/external-edit-interface-kiranshastry-lineal-kiranshastry.png"/>
-    <img class="edit" (click)="deletePost(item.id)"  src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/40/000000/external-delete-miscellaneous-kiranshastry-lineal-kiranshastry.png"/>
-    <header class="user">
-      <div class="userFirstLetter">{{user.firstname[0].toUpperCase()}}</div>
-      <div class="userName">
-        <h2>{{user.firstname}}</h2>
-        <p>{{item.tile}}</p>
-      </div>
-    </header>
-    <main>
-      <p>{{item.body}}</p>
-    </main>
-    <section>
-      <p (click)='getComments(item.id)' class="comment">Comments</p>
-    </section>
-    <div class="parent">
-      <input class="commentInput" type="text" placeholder="Write your comment..." [(ngModel)]='commentValue'>
-      <button class="button" (click)="addComment(item.id)">Send</button>
-    </div>
-    <!-- <li>{{getComments(item.id)}}</li> -->
-    <div *ngFor='let comment of commentsArr'>
-      <app-comment [comment]='comment' [post]="item"></app-comment>
-    </div>
-
-  </div>
+<div *ngFor="let post of postsArr">
+  <app-post-card [post]="post"></app-post-card>
 </div>

@@ -12,7 +12,11 @@ import {User} from "../../../user";
   styleUrls: ['./create-post.component.css']
 })
 export class CreatePostComponent implements OnInit {
-  postForm = this.fb.group({})
+  postForm = this.fb.group({
+    title: ['', Validators.minLength(5)],
+    body: ['', Validators.minLength(5)],
+  });
+
   user: User={
     id: 1,
     firstname: 'U',
@@ -29,16 +33,7 @@ export class CreatePostComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.initForm()
     this.getUser()
-  }
-
-  initForm(){
-    this.postForm = this.fb.group({
-      title: ['', Validators.minLength(5)],
-      body: ['', Validators.minLength(5)],
-    });
-    console.log(this.postForm.value)
   }
 
   post(): void{
@@ -48,6 +43,7 @@ export class CreatePostComponent implements OnInit {
       console.log("error code", e.status)
     })
   }
+
   getUser(){
     this.postsService.getUser().subscribe(u=>{this.user=u})
   }

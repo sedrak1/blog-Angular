@@ -5,12 +5,13 @@ import { HttpClient } from '@angular/common/http';
 import { Post } from '../../post';
 import { Router } from '@angular/router';
 import { Comment } from '../../comment';
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostsService {
-  private url = 'https://blog.fifth-llc.com/';
+  private url = environment.apiURL;
   constructor(private http: HttpClient, private router: Router) {}
 
   createPost(post: Post): Observable<Post> {

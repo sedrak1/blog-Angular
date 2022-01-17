@@ -1,0 +1,22 @@
+<ul>
+  <li><a href="/posts">Posts</a></li>
+</ul>
+
+<form (ngSubmit)="onSubmit()">
+
+  <div  style="padding: 5px" >
+    <div  [formGroup]="postForm" class="card">
+      <header class="user">
+        <div class="userFirstLetter">{{user.firstname[0].toUpperCase()}}</div>
+        <div class="userName">
+          <h2>{{user.firstname}}</h2>
+          <input formControlName="title" [value]="post.tile" placeholder="Title">
+        </div>
+      </header>
+      <main>
+        <textarea formControlName='body' [value]="post.body" placeholder="Body"></textarea>
+      </main>
+      <button type="submit" [disabled]="!this.postForm.valid">{{type[0].toUpperCase()+ type.substring(1)}}</button>
+    </div>
+  </div>
+</form>

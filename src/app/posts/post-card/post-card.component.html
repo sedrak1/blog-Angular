@@ -1,0 +1,19 @@
+<div class="parent">
+  <div  class="card">
+    <img class="edit" routerLink="{{post.id}}" src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/40/000000/external-edit-interface-kiranshastry-lineal-kiranshastry.png"/>
+    <img class="edit" (click)="deletePost(post.id)"  src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/40/000000/external-delete-miscellaneous-kiranshastry-lineal-kiranshastry.png"/>
+    <header class="user">
+      <div class="userFirstLetter">{{user.firstname[0].toUpperCase()}}</div>
+      <div class="userName">
+        <h2>{{user.firstname}}</h2>
+        <p>{{post.tile}}</p>
+      </div>
+    </header>
+
+    <main>
+      <p>{{post.body}}</p>
+    </main>
+
+    <app-comment  [post]="post"></app-comment>
+  </div>
+</div>

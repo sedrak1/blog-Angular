@@ -10,6 +10,8 @@ import { CreatePostComponent } from './create-post/create-post.component';
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {HttpConfigInterceptor} from "../interceptor/httpconfig.interceptor";
 import { EditPostComponent } from './edit-post/edit-post.component';
+import { PostCardComponent } from './post-card/post-card.component';
+import { EditCreateComponent } from './edit-create/edit-create.component';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { EditPostComponent } from './edit-post/edit-post.component';
         PostsComponent,
         CommentComponent,
         CreatePostComponent,
-        EditPostComponent
+        EditPostComponent,
+        PostCardComponent,
+        EditCreateComponent
     ],
     exports: [
         PostsComponent

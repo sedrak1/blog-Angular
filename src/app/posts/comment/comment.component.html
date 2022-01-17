@@ -4,9 +4,25 @@
     <p (click)='onToggle()' class="commentToggle">Comments</p>
 </section>
 <div *ngIf='toggle'>     -->
-        <div class="commentDiv" >
-            <input class="commentInput" [value]='comment.body'   [readonly]='readonly'>
-            <button *ngIf='readonly' class='button' (click)='getComment(comment.id)'>edit</button>
-            <button *ngIf='!readonly' class='button' (click)='editComment(comment.id)'>save</button>
-        </div>
-<!-- </div> -->
+
+<form (ngSubmit)="addComment(comment.id)" >
+  <div  [formGroup]="commentForm">
+    <div class="parent">
+      <input class="commentInput" required="true" id="body" type="title" formControlName="body" placeholder="Write your comment...">
+      <button class="button" type="submit" [disabled]="!commentForm.valid">add comment</button>
+    </div>
+  <div *ngIf="isOpened" class="div" formArrayName="commentsArr">
+    <div  *ngFor="let item of commentsFormArray.controls; let i=index">
+      <input class="input" [id]="i" type="text" [formControlName]="i">
+      <button class="inner" (click)="editComment(commentsArr[i].id, item.value)" type="button"  > Edit</button>
+      <button class="inner" (click)="deleteComment(commentsArr[i].id, item.value)" type="button"  > Delete</button>
+    </div>
+  </div>
+  </div>
+</form>
+
+<section>
+  <p (click)='onToggle()' class="comment">Comments</p>
+</section>
+
+
