@@ -12,7 +12,7 @@ import {environment} from "../../environments/environment";
 })
 export class PostsService {
   private url = environment.apiURL;
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient) {}
 
   createPost(post: Post): Observable<Post> {
     return this.http.post<Post>(this.url + 'api/v1/post', post);
@@ -56,5 +56,9 @@ export class PostsService {
 
   deleteComment(postId: number, id: number): Observable<Comment> {
     return this.http.delete<Comment>(this.url + `api/v1/post/${postId}/comment/${id}`);
+  }
+
+  me(){
+    return this.http.get(this.url + 'api/v1/me')
   }
 }

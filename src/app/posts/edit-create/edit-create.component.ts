@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Post} from "../../../post";
 import {PostsService} from "../posts.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -13,13 +13,21 @@ import {User} from "../../../user";
 export class EditCreateComponent implements OnInit {
 
   @Input()
-  type!:string;
+  button!:string;
 
-  post: Post= {tile:'asd', body:'qwewqe', id:1}
+  @Input()
+  post!:Post
+
+  @Output() submitFunc = new EventEmitter()
+
+  // post: Post= {tile:'', body:'', id:1}
   postForm = this.fb.group({
-    title: this.fb.control('', Validators.minLength(5)),
-    body: this.fb.control('', Validators.minLength(5)),
+
+    title: this.fb.control("", Validators.minLength(5)),
+    body: this.fb.control("", Validators.minLength(5)),
+    id: this.fb.control("", Validators.minLength(5)),
   })
+
   user: User={
     id: 1,
     firstname: 'U',
@@ -38,44 +46,32 @@ export class EditCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.type === 'edit'){
-      this.getPost()
-    }
+
     this.getUser()
+    setTimeout(()=>{this.initForm()},1000)
   }
 
-  getPost(){
-    const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
-    this.postsService.getPost(id).subscribe(post=>{
-      this.postForm = this.fb.group({
-        title: this.fb.control(post.tile, Validators.minLength(5)),
-        body: this.fb.control(post.body, Validators.minLength(5)),
-        id:this.fb.control(id)
-      })
+  initForm(){
+    this.postForm = this.fb.group({
+      title: this.fb.control(this.post.tile, Validators.minLength(5)),
+      body: this.fb.control(this.post.body, Validators.minLength(5)),
+      id: this.fb.control(this.post.id, Validators.minLength(5)),
     })
   }
 
-  updatePost(){
-    this.postsService.editPost(this.postForm.value).subscribe(()=>{this.router.navigate(['/posts'])})
-  }
+  // updatePost(){
+  //   console.log(this.postForm.value)
+  //   this.postsService.editPost(this.postForm.value).subscribe(()=>{this.router.navigate(['/posts'])})
+  // }
 
   getUser(){
     this.postsService.getUser().subscribe(u=>{this.user=u})
   }
 
-  createPost(): void{
-    this.postsService.createPost({...this.postForm.value, }).subscribe((p:Post)=>{
-      this.router.navigate(['/posts'])
-    },(e)=> {
-      console.log("error code", e.status)
-    })
-  }
+
 
   onSubmit(){
-    if (this.type === 'edit'){
-      this.updatePost()
-    }else{
-      this.createPost()
-    }
+    // console.log(this.demo.emit(this.postForm))
+    this.submitFunc.emit(this.postForm)
   }
 }

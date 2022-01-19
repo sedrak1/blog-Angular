@@ -47,7 +47,6 @@ export class CommentComponent implements OnInit {
     for (let i = 0; i < this.commentsArr.length; i++) {
       this.commentsFormArray.push(this.fb.control(this.commentsArr[i].body));
     }
-    console.log()
   }
 
   editComment(commentId : number, comment:string){
@@ -83,10 +82,9 @@ export class CommentComponent implements OnInit {
   }
 
   deleteComment(commentId:number, comment: string){
+    this.getComments()
     this.postsService.deleteComment(this.post.id, commentId).subscribe(()=>{
       this.commentsFormArray.removeAt(this.commentsFormArray.value.findIndex((com: string) => com===comment))
-      console.log(this.commentsFormArray.value, this.commentsArr)
-      this.commentsArr = this.commentsFormArray.value
     })
   }
 

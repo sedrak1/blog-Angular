@@ -10,11 +10,13 @@ import {PostsRoutingModule} from "./posts/posts-routing.module";
 import {AuthRoutingModule} from "./auth/auth-routing.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { HttpConfigInterceptor } from './interceptor/httpconfig.interceptor';
+import { ValidationLabelDirective } from './error-manager.directive';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -27,6 +29,9 @@ import { HttpConfigInterceptor } from './interceptor/httpconfig.interceptor';
     FlexLayoutModule
   ],
   providers: [],
+  exports: [
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

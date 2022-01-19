@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {PostsService} from "../posts.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Post} from "../../../post";
+import {FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-edit-post',
@@ -7,9 +11,25 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class EditPostComponent implements OnInit {
+  post: Post = {tile: "", body: "", id: 1}
 
-  constructor(){}
 
-  ngOnInit(): void {}
+  constructor(private postsService: PostsService, private route: ActivatedRoute, private router: Router) {
+  }
+
+  ngOnInit(): void {
+    this.getPost()
+  }
+
+  getPost() {
+    const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
+    this.postsService.getPost(id).subscribe(post => {
+      this.post = post;
+    })
+  }
+
+  onSubmit(postForm:FormGroup){
+    this.postsService.editPost(postForm.value).subscribe(()=>{this.router.navigate(['/posts'])})
+  }
 
 }

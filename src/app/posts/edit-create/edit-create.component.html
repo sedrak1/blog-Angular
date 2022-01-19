@@ -16,7 +16,7 @@
       <main>
         <textarea formControlName='body' [value]="post.body" placeholder="Body"></textarea>
       </main>
-      <button type="submit" [disabled]="!this.postForm.valid">{{type[0].toUpperCase()+ type.substring(1)}}</button>
+      <button class="button" type="submit" [disabled]="!this.postForm.valid" style="float: right">{{button}}</button>
     </div>
   </div>
 </form>

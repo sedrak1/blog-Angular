@@ -8,22 +8,22 @@
     <h3>Log in</h3>
 
     <label for="email">E-mail: </label>
-    <input required="true" id="email" type="email" formControlName="email" placeholder="Email Name">
-    <div *ngIf="loginForm.controls['email'].invalid && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)" style="border-top: 1px solid red">
-      <small *ngIf="loginForm.controls['email']">
-        Invalid e-mail
-      </small>
-    </div>
+    <input required="true" id="email" appValidationLabel type="email" formControlName="email" placeholder="Email Name">
+<!--    <div *ngIf="loginForm.controls['email'].invalid && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)" style="border-top: 1px solid red">-->
+<!--      <small *ngIf="loginForm.controls['email']">-->
+<!--        Invalid e-mail-->
+<!--      </small>-->
+<!--    </div>-->
 
     <label for="password">Password: </label>
-    <input required="true" id="password" type="password" formControlName="password" placeholder="Password">
-    <div *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)" style="border-top: 1px solid red">
-      <small *ngIf="loginForm.controls['password']">
-        Password must have 6 characters
-      </small>
-    </div>
+    <input required="true" id="password" appValidationLabel type="password" formControlName="password" placeholder="Password">
+<!--    <div *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)" style="border-top: 1px solid red">-->
+<!--      <small *ngIf="loginForm.controls['password']">-->
+<!--        Password must have 6 characters-->
+<!--      </small>-->
+<!--    </div>-->
 
-    <button type="submit"   [disabled]="!loginForm.valid">Log in</button>
+    <button type="submit"   [disabled]="!loginForm.valid">Sign in</button>
     <a routerLink="/signUp">Register now</a>
 
   </div>

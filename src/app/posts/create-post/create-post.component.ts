@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
 import {PostsService} from "../posts.service";
-import {FormBuilder, Validators} from "@angular/forms";
 import {Post} from "../../../post";
-import {Router} from "@angular/router";
-import {User} from "../../../user";
-
 
 @Component({
   selector: 'app-create-post',
@@ -12,40 +10,19 @@ import {User} from "../../../user";
   styleUrls: ['./create-post.component.css']
 })
 export class CreatePostComponent implements OnInit {
-  postForm = this.fb.group({
-    title: ['', Validators.minLength(5)],
-    body: ['', Validators.minLength(5)],
-  });
-
-  user: User={
-    id: 1,
-    firstname: 'U',
-    lastname: '',
-    email: '',
-    password: '',
-    api_token: '',
-  }
-
-  constructor(
-    private router: Router,
-    private postsService: PostsService,
-    private fb: FormBuilder
-  ) { }
+  post: Post= {body:'',tile:'', id:1}
+  constructor(private route:ActivatedRoute, private postsService: PostsService, private fb: FormBuilder, private router: Router)
+   {}
 
   ngOnInit(): void {
-    this.getUser()
   }
 
-  post(): void{
-    this.postsService.createPost({...this.postForm.value, }).subscribe((p:Post)=>{
+  onSubmit(postForm: FormGroup): void{
+    this.postsService.createPost({...postForm.value, }).subscribe((p:Post)=>{
       this.router.navigate(['/posts'])
     },(e)=> {
       console.log("error code", e.status)
     })
-  }
-
-  getUser(){
-    this.postsService.getUser().subscribe(u=>{this.user=u})
   }
 
 }
