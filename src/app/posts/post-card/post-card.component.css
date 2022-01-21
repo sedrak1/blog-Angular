@@ -128,3 +128,9 @@ li a {
 li a:hover {
   background-color: #111;
 }
+
+@media only screen and (max-width: 1000px) {
+  .card{
+    width: 70%
+  }
+}

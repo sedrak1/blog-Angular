@@ -17,7 +17,7 @@ body {
 }
 
 .card {
-  width: 520px;
+  width: 30%;
   border-radius: 20px;
   background: #191A1D;
   overflow: hidden;
@@ -141,4 +141,11 @@ li a:hover {
 .button:disabled{
   background-color: #ececec;
   display: none;
+}
+
+
+@media only screen and (max-width: 1000px) {
+  .card{
+    width: 70%
+  }
 }
