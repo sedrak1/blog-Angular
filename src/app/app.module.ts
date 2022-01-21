@@ -11,11 +11,13 @@ import {AuthRoutingModule} from "./auth/auth-routing.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { HttpConfigInterceptor } from './interceptor/httpconfig.interceptor';
 import { ValidationLabelDirective } from './error-manager.directive';
+import { StructuralDirDirective } from './structural-dir.directive';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+
 
   ],
   imports: [

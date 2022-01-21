@@ -12,6 +12,7 @@ import {HttpConfigInterceptor} from "../interceptor/httpconfig.interceptor";
 import { EditPostComponent } from './edit-post/edit-post.component';
 import { PostCardComponent } from './post-card/post-card.component';
 import { EditCreateComponent } from './edit-create/edit-create.component';
+import {StructuralDirDirective} from "../structural-dir.directive";
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { EditCreateComponent } from './edit-create/edit-create.component';
         CreatePostComponent,
         EditPostComponent,
         PostCardComponent,
-        EditCreateComponent
+        EditCreateComponent,
+      StructuralDirDirective
     ],
     exports: [
         PostsComponent

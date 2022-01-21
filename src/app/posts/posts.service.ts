@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import { User } from '../../user';
 import { HttpClient } from '@angular/common/http';
 import { Post } from '../../post';
@@ -12,7 +12,24 @@ import {environment} from "../../environments/environment";
 })
 export class PostsService {
   private url = environment.apiURL;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    // let obs = new Observable((subscriber) => {
+    //   setTimeout(() => {
+    //     subscriber.next()
+    //
+    //   }, 5000)
+    // })
+    //
+    // obs.subscribe(val => console.log('asd'))
+    //
+    //
+    //
+    // const sub = new Subject()
+    //
+    // sub.next(11)
+    //
+    // sub.subscribe()
+  }
 
   createPost(post: Post): Observable<Post> {
     return this.http.post<Post>(this.url + 'api/v1/post', post);
@@ -58,7 +75,8 @@ export class PostsService {
     return this.http.delete<Comment>(this.url + `api/v1/post/${postId}/comment/${id}`);
   }
 
-  me(){
-    return this.http.get(this.url + 'api/v1/me')
+  me(): Observable<User>{
+    return this.http.get<User>(this.url + 'api/v1/me')
   }
+
 }

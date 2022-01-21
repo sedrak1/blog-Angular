@@ -28,4 +28,8 @@ export class AuthService {
     return this.http.post<User>(this.url + 'api/v1/auth/login', user, );
   }
 
+  me(): Observable<User>{
+    return this.http.get<User>(this.url + 'api/v1/me')
+  }
+
 }
