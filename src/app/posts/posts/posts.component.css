@@ -21,7 +21,9 @@
 }
 
 .parent{
+  background-position: top;
   display: block;
+  top: 20px;
 }
 .card {
   margin: auto;
@@ -106,6 +108,8 @@ p.comment {
 }
 
 ul {
+  top: 0px;
+  width: 100%;
   font-family: Poppins;
   list-style-type: none;
   margin: 0;
@@ -128,4 +132,24 @@ li a {
 
 li a:hover {
   background-color: #111;
+}
+
+.search{
+  margin-left: 4px;
+  position: fixed;
+  top: 60px;
+}
+
+input{
+  width: 100%;
+  padding-left: 5px;
+  border: none;
+  height: 30px;
+  margin-right: 5px;
+  background-color: rgb(25, 26, 29);
+  caret-color: rgb(136, 133, 133);
+  color: white;
+  border-radius: 8px;
+  outline: none;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.51);
 }

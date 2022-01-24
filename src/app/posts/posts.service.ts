@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable, Subject} from 'rxjs';
+import {debounce, debounceTime, Observable, Subject} from 'rxjs';
 import { User } from '../../user';
 import { HttpClient } from '@angular/common/http';
 import { Post } from '../../post';
@@ -73,6 +73,11 @@ export class PostsService {
 
   deleteComment(postId: number, id: number): Observable<Comment> {
     return this.http.delete<Comment>(this.url + `api/v1/post/${postId}/comment/${id}`);
+  }
+
+  search(searchkey: string): Observable<Post[]> {
+    // @ts-ignore
+    return this.http.get<Post[]>(this.url + 'api/v1/post/',searchkey);
   }
 
   me(): Observable<User>{

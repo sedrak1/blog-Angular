@@ -2,8 +2,14 @@
   <li><a href="/create-post">Create</a></li>
   <li><a href="" (click)="logOut()">Log out</a></li>
 </ul>
-<div *ngFor="let post of postsArr">
-  <app-post-card [post]="post"></app-post-card>
+
+<div class="search">
+  <input [(ngModel)]="searchKey"  class="input" placeholder="search">
+  <button (click)="handleSearch(searchKey)" >search</button>
+</div>
+
+<div class="parent" *ngFor="let post of postsArr">
+  <app-post-card [user]="user" [post]="post"></app-post-card>
 </div>
 
 

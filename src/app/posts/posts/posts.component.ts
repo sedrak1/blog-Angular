@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import { PostsService } from "../posts.service";
 import {Post} from "../../../post";
 import {User} from "../../../user";
 import {Comment} from "../../../comment";
-import {Router} from "@angular/router";
-import {filter, Observable, take, tap} from "rxjs";
+import {ActivatedRoute, Router} from "@angular/router";
+import {debounceTime, filter, fromEvent, Observable, ObservableInput, switchMap, take, tap} from "rxjs";
 import {map} from "rxjs/operators";
+import {query} from "@angular/animations";
 
 
 @Component({
@@ -16,27 +17,68 @@ import {map} from "rxjs/operators";
 export class PostsComponent implements OnInit {
   postsArr: Post[] = []
   bool: boolean = true
+  scroll = fromEvent(document,'scroll');
+  scrollCount = 0
+  user: User={
+    id: 1,
+    firstname: 'User',
+    lastname: '',
+    email: '',
+    password: '',
+    api_token: '',
+  }
+  searchKey: string = ''
 
-  commentValue = ''
 
-  constructor(private postsService: PostsService, private router: Router ) { }
-
-  ngOnInit(): void {
-    let obs = new Observable()
-    this.getPosts()
-    setTimeout(()=>{this.bool = false},3000)
+  constructor(private postsService: PostsService, private router: Router, private activatedRoute: ActivatedRoute ) {
   }
 
-  getPosts(){
-    this.postsService.getPosts().pipe(
-      tap((post)=>{
-        console.log(post)
-        })
-    ).subscribe(arr=>{this.postsArr=arr})
+  ngOnInit(): void {
+    this.handleScroll()
+    this.getUser()
+    this.getPosts().subscribe()
+    this.handleSearch(this.searchKey)
+  }
+
+  handleScroll(){
+    this.scroll.pipe(
+      filter(()=>{return window.innerHeight + window.scrollY  >= document.body.offsetHeight - 100 }),
+      filter(()=>{return this.scrollCount < 5 }),
+      switchMap( () => this.getPosts()),
+      tap(()=>{this.scrollCount++}),
+    ).subscribe()
+  }
+
+  handleSearch(searchKey: string){
+    // this.router.navigate([], {
+    //   queryParamsHandling: 'merge',
+    //   queryParams: { searchKey: encodeURI(this.searchKey) },
+    // });
+
+    this.activatedRoute.queryParams.pipe(
+      map(val=>{
+        console.log(val['searchKey'])})
+    ).subscribe();
+    return this.postsService.search(searchKey).pipe(
+      map((posts:Post[])=>{return this.postsArr=posts})
+    ).subscribe()
+  }
+
+  getPosts(): Observable<any>{
+    return this.postsService.getPosts().pipe(
+      tap((arr)=>{this.postsArr.push(...arr)}))
   }
 
   logOut(){
     localStorage.removeItem('token')
     this.router.navigate(['/signIn'])
+  }
+
+  getUser(){
+    this.postsService.getUser().pipe(
+      tap((u)=>{
+        this.user=u
+      })
+    ).subscribe()
   }
 }
