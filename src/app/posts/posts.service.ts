@@ -35,8 +35,9 @@ export class PostsService {
     return this.http.post<Post>(this.url + 'api/v1/post', post);
   }
 
-  getPosts(): Observable<Post[]> {
-    return this.http.get<Post[]>(this.url + 'api/v1/post');
+  getPosts(searchKey:string = ''): Observable<Post[]> {
+    // @ts-ignore
+    return this.http.get<Post[]>((this.url + 'api/v1/post'),searchKey);
   }
 
   getPost(id: number): Observable<Post> {

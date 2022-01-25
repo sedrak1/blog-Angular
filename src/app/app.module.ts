@@ -12,24 +12,28 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import { HttpConfigInterceptor } from './interceptor/httpconfig.interceptor';
 import { ValidationLabelDirective } from './error-manager.directive';
 import { StructuralDirDirective } from './structural-dir.directive';
+import { SearchComponent } from './search/search.component';
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    SearchComponent,
 
 
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    PostsModule,
-    AuthModule,
-    AppRoutingModule,
-    PostsRoutingModule,
-    AuthRoutingModule,
-    FlexLayoutModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        PostsModule,
+        AuthModule,
+        AppRoutingModule,
+        PostsRoutingModule,
+        AuthRoutingModule,
+        FlexLayoutModule,
+        FormsModule
+    ],
   providers: [],
   exports: [
 

@@ -1,13 +1,16 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { PostsService } from "../posts.service";
 import {Post} from "../../../post";
 import {User} from "../../../user";
-import {Comment} from "../../../comment";
 import {ActivatedRoute, Router} from "@angular/router";
-import {debounceTime, filter, fromEvent, Observable, ObservableInput, switchMap, take, tap} from "rxjs";
-import {map} from "rxjs/operators";
-import {query} from "@angular/animations";
-
+import {
+  filter,
+  fromEvent,
+  merge,
+  Observable,
+  switchMap,
+  tap
+} from "rxjs";
 
 @Component({
   selector: 'app-posts',
@@ -18,7 +21,7 @@ export class PostsComponent implements OnInit {
   postsArr: Post[] = []
   bool: boolean = true
   scroll = fromEvent(document,'scroll');
-  scrollCount = 0
+  scrollCount = 1
   user: User={
     id: 1,
     firstname: 'User',
@@ -27,46 +30,48 @@ export class PostsComponent implements OnInit {
     password: '',
     api_token: '',
   }
-  searchKey: string = ''
+  searchKey!: string;
+  getData:boolean = false
 
-
-  constructor(private postsService: PostsService, private router: Router, private activatedRoute: ActivatedRoute ) {
-  }
+  constructor(private postsService: PostsService, private router: Router, private activatedRoute: ActivatedRoute ) {}
 
   ngOnInit(): void {
-    this.handleScroll()
     this.getUser()
-    this.getPosts().subscribe()
-    this.handleSearch(this.searchKey)
+
+    this.merge.pipe(
+      switchMap(()=>this.getPosts()),
+      tap(()=>{
+        this.scrollCount ++
+      }),
+    ).subscribe()
   }
+
+  scrollObs =  this.scroll.pipe(
+    filter(()=> window.innerHeight + window.scrollY  + 200 >= document.body.offsetHeight ),
+    filter(()=> this.scrollCount < 15 ),
+    filter(()=> !this.getData),
+    tap(()=>{
+      this.getData = true
+    })
+  )
+
+  routeParamsObs = this.activatedRoute.queryParams.pipe(
+    tap((val)=>{
+      this.searchKey = val['searchKey'] ? val['searchKey'] : ''
+      this.postsArr = []
+    }))
+
+  merge = merge(this.scrollObs, this.routeParamsObs)
 
   handleScroll(){
-    this.scroll.pipe(
-      filter(()=>{return window.innerHeight + window.scrollY  >= document.body.offsetHeight - 100 }),
-      filter(()=>{return this.scrollCount < 5 }),
-      switchMap( () => this.getPosts()),
-      tap(()=>{this.scrollCount++}),
-    ).subscribe()
+    this.merge.subscribe()
   }
 
-  handleSearch(searchKey: string){
-    // this.router.navigate([], {
-    //   queryParamsHandling: 'merge',
-    //   queryParams: { searchKey: encodeURI(this.searchKey) },
-    // });
-
-    this.activatedRoute.queryParams.pipe(
-      map(val=>{
-        console.log(val['searchKey'])})
-    ).subscribe();
-    return this.postsService.search(searchKey).pipe(
-      map((posts:Post[])=>{return this.postsArr=posts})
-    ).subscribe()
-  }
-
-  getPosts(): Observable<any>{
-    return this.postsService.getPosts().pipe(
-      tap((arr)=>{this.postsArr.push(...arr)}))
+  getPosts(searchKey:string = ''): Observable<any>{
+    return this.postsService.getPosts(searchKey).pipe(
+      tap((arr)=>{
+        this.getData=false
+        this.postsArr.push(...arr)}))
   }
 
   logOut(){
@@ -77,7 +82,7 @@ export class PostsComponent implements OnInit {
   getUser(){
     this.postsService.getUser().pipe(
       tap((u)=>{
-        this.user=u
+        this.user = u
       })
     ).subscribe()
   }

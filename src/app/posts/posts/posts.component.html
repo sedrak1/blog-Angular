@@ -3,10 +3,6 @@
   <li><a href="" (click)="logOut()">Log out</a></li>
 </ul>
 
-<div class="search">
-  <input [(ngModel)]="searchKey"  class="input" placeholder="search">
-  <button (click)="handleSearch(searchKey)" >search</button>
-</div>
 
 <div class="parent" *ngFor="let post of postsArr">
   <app-post-card [user]="user" [post]="post"></app-post-card>
