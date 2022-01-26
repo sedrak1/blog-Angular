@@ -1,11 +1,15 @@
-import { Query } from '@datorama/akita';
-import { PostStore, PostState } from './posts.store';
+import { QueryEntity } from '@datorama/akita';
+import {PostsStore, PostsState,} from "./posts.store";
+import {Post} from "../../../../post";
 
-export class PostsQuery extends Query<PostState> {
-  allState$ = this.select();
-  isLoggedIn$ = this.select(state => !!state.postsArr);
-  selectName$ = this.select('postsArr');
-  constructor(protected override store: PostStore) {
+import {Injectable} from "@angular/core";
+import {User} from "../../../../user";
+import {tap} from "rxjs";
+
+@Injectable({providedIn: 'root'})
+
+export class PostsQuery extends QueryEntity<PostsState> {
+  constructor(protected override store: PostsStore) {
     super(store);
   }
 }

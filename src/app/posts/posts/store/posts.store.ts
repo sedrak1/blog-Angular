@@ -1,19 +1,16 @@
-import { Store, StoreConfig } from '@datorama/akita';
-import {Post} from "../../../../post";
+import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
+import { Post } from "../../../../post";
+import {Injectable} from "@angular/core";
 
-export interface PostState {
-  postsArr: Post[]
-}
+export interface PostsState extends EntityState<Post> {}
 
-export function createInitialState(): PostState {
-  return {
-    postsArr: [],
-  };
-}
 
-@StoreConfig({ name: 'session' })
-export class PostStore extends Store<PostState> {
+@Injectable({ providedIn: 'root' })
+
+@StoreConfig({ name: 'posts' })
+
+export class PostsStore extends EntityStore<PostsState >{
   constructor() {
-    super(createInitialState());
+    super();
   }
 }
