@@ -21,7 +21,6 @@ export class PostGuard implements CanActivate {
         catchError(() => {
           return of(false)
         }),
-
       )
   }
 
