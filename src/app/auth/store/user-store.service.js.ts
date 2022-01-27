@@ -5,15 +5,14 @@ import {Injectable} from "@angular/core";
 
 @Injectable({providedIn: 'root'})
 
-export class SessionService {
+export class UserService {
   constructor(private userStore: UserStore, private authService: AuthService) {
   }
 
   getUser(){
     return this.authService.me()
       .pipe(
-        tap(val => {this.userStore.update(val)
-          console.log(val)}
+        tap(val => {this.userStore.update(val)}
         )
       )
   }

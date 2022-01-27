@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import {debounce, debounceTime, Observable, Subject} from 'rxjs';
+import { Observable } from 'rxjs';
 import { User } from '../../user';
 import { HttpClient } from '@angular/common/http';
 import { Post } from '../../post';
-import { Router } from '@angular/router';
 import { Comment } from '../../comment';
 import {environment} from "../../environments/environment";
 
@@ -12,24 +11,7 @@ import {environment} from "../../environments/environment";
 })
 export class PostsService {
   private url = environment.apiURL;
-  constructor(private http: HttpClient) {
-    // let obs = new Observable((subscriber) => {
-    //   setTimeout(() => {
-    //     subscriber.next()
-    //
-    //   }, 5000)
-    // })
-    //
-    // obs.subscribe(val => console.log('asd'))
-    //
-    //
-    //
-    // const sub = new Subject()
-    //
-    // sub.next(11)
-    //
-    // sub.subscribe()
-  }
+  constructor(private http: HttpClient) {}
 
   createPost(post: Post): Observable<Post> {
     return this.http.post<Post>(this.url + 'api/v1/post', post);

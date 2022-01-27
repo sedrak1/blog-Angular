@@ -13,7 +13,6 @@ import {
 import {PostsQuery} from "./store/posts.query";
 import {PostsStoreService} from "./store/posts-store.service";
 import {UserQuery} from "../../auth/store/user.query";
-import {UserState} from "../../auth/store/user.store";
 
 @Component({
   selector: 'app-posts',
@@ -89,7 +88,7 @@ export class PostsComponent implements OnInit {
 
   getUser(){
     this.userQuery.select().pipe(
-      tap(val=> {this.user = val, console.log(val)})
+      tap(val=> this.user = val)
     ).subscribe()
   }
 }

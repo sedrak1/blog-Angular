@@ -1,5 +1,6 @@
 import { Store, StoreConfig } from '@datorama/akita';
 import {Injectable} from "@angular/core";
+import {UserService} from "./user-store.service.js";
 
 export interface UserState {
   firstname: string,

@@ -2,7 +2,7 @@ import {PostsStore} from "./posts.store";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../../environments/environment";
 import {PostsService} from "../../posts.service";
-import {tap} from "rxjs";
+import {Observable, tap} from "rxjs";
 import {Post} from "../../../../post";
 
 import {Injectable} from "@angular/core";
@@ -21,16 +21,25 @@ export class PostsStoreService {
   getPosts() {
     return this.postsService.getPosts()
       .pipe(
+        tap(val => this.postsStore.set(val))
+      )
+  }
+
+  createPost(post: Post) {
+    return this.postsService.createPost(post)
+      .pipe(
         tap(val => this.postsStore.add(val))
       )
   }
 
-  // getUser() {
-  //   this.postsService.getUser().pipe(
-  //     tap(val => {
-  //       // @ts-ignore
-  //       this.postsStore.add(val)}
-  //   )).subscribe()
-  // }
+  getPost(id: number){
+    return this.postsService.getPost(id)
+  }
 
+  editPost(post:Post){
+    return this.postsService.editPost(post)
+      .pipe(
+        tap(val => this.postsStore.update(post.id,val))
+      )
+  }
 }

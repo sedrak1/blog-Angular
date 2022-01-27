@@ -1,28 +1,33 @@
-import {Component, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {PostsService} from "../posts.service";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {Router} from "@angular/router";
 import {Post} from "../../../post";
+import {PostsStoreService} from "../posts/store/posts-store.service";
+import {tap} from "rxjs";
 
 @Component({
   selector: 'app-create-post',
   templateUrl: './create-post.component.html',
   styleUrls: ['./create-post.component.css']
 })
+
 export class CreatePostComponent implements OnInit {
+
   post: Post= {body:'',tile:'', id:1}
-  constructor(private route:ActivatedRoute, private postsService: PostsService, private fb: FormBuilder, private router: Router)
-   {}
+
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private storeService: PostsStoreService,
+  ) {}
 
   ngOnInit(): void {
   }
 
   onSubmit(postForm: FormGroup): void{
-    this.postsService.createPost({...postForm.value, }).subscribe((p:Post)=>{
-      this.router.navigate(['/posts'])
-    },(e)=> {
-      console.log("error code", e.status)
-    })
+    this.storeService.createPost({...postForm.value})
+      .pipe(
+        tap(()=>this.router.navigate((['/posts'])))
+      ).subscribe()
   }
-
 }

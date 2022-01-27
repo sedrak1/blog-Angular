@@ -31,5 +31,4 @@ export class AuthService {
   me(): Observable<User>{
     return this.http.get<User>(this.url + 'api/v1/me')
   }
-
 }

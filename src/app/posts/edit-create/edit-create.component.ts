@@ -1,15 +1,16 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Post} from "../../../post";
-import {PostsService} from "../posts.service";
-import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, Validators} from "@angular/forms";
 import {User} from "../../../user";
+import {UserQuery} from "../../auth/store/user.query";
+import {tap} from "rxjs";
 
 @Component({
   selector: 'app-edit-create',
   templateUrl: './edit-create.component.html',
   styleUrls: ['./edit-create.component.css']
 })
+
 export class EditCreateComponent implements OnInit {
 
   @Input()
@@ -20,12 +21,10 @@ export class EditCreateComponent implements OnInit {
 
   @Output() submitFunc = new EventEmitter()
 
-  // post: Post= {tile:'', body:'', id:1}
   postForm = this.fb.group({
-
     title: this.fb.control("", Validators.minLength(5)),
     body: this.fb.control("", Validators.minLength(5)),
-    id: this.fb.control("", Validators.minLength(5)),
+    id: this.fb.control("",),
   })
 
   user: User={
@@ -38,15 +37,11 @@ export class EditCreateComponent implements OnInit {
   }
 
   constructor(
-    private router: Router,
-    private postsService:PostsService,
-    private route: ActivatedRoute,
-    private fb: FormBuilder
-  ) {
-  }
+    private fb: FormBuilder,
+    private userQuery: UserQuery
+  ) {}
 
   ngOnInit(): void {
-
     this.getUser()
     setTimeout(()=>{this.initForm()},1000)
   }
@@ -55,23 +50,16 @@ export class EditCreateComponent implements OnInit {
     this.postForm = this.fb.group({
       title: this.fb.control(this.post.tile, Validators.minLength(5)),
       body: this.fb.control(this.post.body, Validators.minLength(5)),
-      id: this.fb.control(this.post.id, Validators.minLength(5)),
+      id: this.fb.control(this.post.id),
     })
   }
 
-  // updatePost(){
-  //   console.log(this.postForm.value)
-  //   this.postsService.editPost(this.postForm.value).subscribe(()=>{this.router.navigate(['/posts'])})
-  // }
-
   getUser(){
-    this.postsService.getUser().subscribe(u=>{this.user=u})
+    this.userQuery.select()
+      .pipe(tap(val => this.user = val)).subscribe()
   }
 
-
-
   onSubmit(){
-    // console.log(this.demo.emit(this.postForm))
     this.submitFunc.emit(this.postForm)
   }
 }

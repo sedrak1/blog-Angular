@@ -1,8 +1,9 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {PostsService} from "../posts.service";
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Post} from "../../../post";
 import {FormGroup} from "@angular/forms";
+import {PostsStoreService} from "../posts/store/posts-store.service";
+import {tap} from "rxjs";
 
 @Component({
   selector: 'app-edit-post',
@@ -11,11 +12,14 @@ import {FormGroup} from "@angular/forms";
 })
 
 export class EditPostComponent implements OnInit {
+
   post: Post = {tile: "", body: "", id: 1}
 
-
-  constructor(private postsService: PostsService, private route: ActivatedRoute, private router: Router) {
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private storeService: PostsStoreService
+  ) {}
 
   ngOnInit(): void {
     this.getPost()
@@ -23,13 +27,16 @@ export class EditPostComponent implements OnInit {
 
   getPost() {
     const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
-    this.postsService.getPost(id).subscribe(post => {
-      this.post = post;
-    })
+    this.storeService.getPost(id)
+      .pipe(
+        tap(post => this.post = post)
+      ).subscribe()
   }
 
   onSubmit(postForm:FormGroup){
-    this.postsService.editPost(postForm.value).subscribe(()=>{this.router.navigate(['/posts'])})
+    this.storeService.editPost(postForm.value)
+      .pipe(
+        tap(() => this.router.navigate(['/posts']))
+      ).subscribe()
   }
-
 }
