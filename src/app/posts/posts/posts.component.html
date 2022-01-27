@@ -3,10 +3,16 @@
   <li><a href="" (click)="logOut()">Log out</a></li>
 </ul>
 
-
-<div class="parent" *ngFor="let post of postsArr">
-  <app-post-card [user]="user" [post]="post"></app-post-card>
+<div class="userInfo">
+  <h3>{{user.firstname}} {{user.lastname}}</h3>
+  <h3>{{user.email}}</h3>
+  <br>
+  <h4>selected post id - {{ selectedPostId}}</h4>
 </div>
 
 
+<div *ngIf="(loading$|async)"  class="loader"></div>
 
+<div  class="parent" *ngFor="let post of posts$ | async">
+  <app-post-card (click)="selectedPostId=post.id" *ngIf="!( loading$|async )" [user]="user" [post]="post"></app-post-card>
+</div>

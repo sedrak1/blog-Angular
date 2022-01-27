@@ -1,19 +1,16 @@
 import { UserStore } from "./user.store";
 import {AuthService} from "../auth.service";
-import {tap} from "rxjs";
+import {Observable, tap} from "rxjs";
 import {Injectable} from "@angular/core";
+import {User} from "../../../user";
 
 @Injectable({providedIn: 'root'})
 
 export class UserService {
-  constructor(private userStore: UserStore, private authService: AuthService) {
+  constructor(private userStore: UserStore,) {
   }
 
-  getUser(){
-    return this.authService.me()
-      .pipe(
-        tap(val => {this.userStore.update(val)}
-        )
-      )
+  updateStore(user: User) : Observable<User>{
+    return this.userStore.update( user )
   }
 }

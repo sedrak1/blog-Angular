@@ -34,10 +34,6 @@ export class PostsService {
     return this.http.delete<Post>(`${this.url}api/v1/post/${id}`);
   }
 
-  getUser(): Observable<User> {
-    return this.http.get<User>(this.url + 'api/v1/me');
-  }
-
   addComment(postId: number, comment: Comment): Observable<Comment> {
     return this.http.post<Comment>(this.url + `api/v1/post/${postId}/comment`, comment);
   }
@@ -56,11 +52,6 @@ export class PostsService {
 
   deleteComment(postId: number, id: number): Observable<Comment> {
     return this.http.delete<Comment>(this.url + `api/v1/post/${postId}/comment/${id}`);
-  }
-
-  search(searchkey: string): Observable<Post[]> {
-    // @ts-ignore
-    return this.http.get<Post[]>(this.url + 'api/v1/post/',searchkey);
   }
 
   me(): Observable<User>{

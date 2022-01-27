@@ -34,6 +34,10 @@ export class PostsComponent implements OnInit {
   }
   searchKey!: string;
   getData:boolean = false
+  loading$ = this.postsQuery.selectLoading();
+  selectedPostId!: number
+
+  posts$ = this.postsQuery.selectAll();
 
   constructor(
     private router: Router,
@@ -46,6 +50,7 @@ export class PostsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.loading$.pipe(tap(value => console.log(value))).subscribe(),123)
     this.storeService.getPosts().subscribe()
 
     this.getUser()
@@ -88,7 +93,7 @@ export class PostsComponent implements OnInit {
 
   getUser(){
     this.userQuery.select().pipe(
-      tap(val=> this.user = val)
+      tap(val=> {this.user = val})
     ).subscribe()
   }
 }

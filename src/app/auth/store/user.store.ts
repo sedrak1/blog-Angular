@@ -1,6 +1,5 @@
 import { Store, StoreConfig } from '@datorama/akita';
 import {Injectable} from "@angular/core";
-import {UserService} from "./user-store.service.js";
 
 export interface UserState {
   firstname: string,
@@ -23,7 +22,6 @@ export function createInitialState(): UserState {
 }
 
 @Injectable({providedIn: 'root'})
-
 @StoreConfig({ name: 'session' })
 export class UserStore extends Store<UserState> {
   constructor() {
